@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-	[string]$WorkspaceRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path,
+	[string]$WorkspaceRoot = "",
 	[string]$ScummvmRoot = "",
 	[string]$GamePath = "",
 	[string]$ConfigPath = "",
@@ -30,6 +30,23 @@ function Fail {
 	)
 	Write-Error $Message
 	exit $Code
+}
+
+if ([string]::IsNullOrWhiteSpace($WorkspaceRoot)) {
+	$scriptDir = ""
+	if ($PSScriptRoot) {
+		$scriptDir = $PSScriptRoot
+	} elseif ($MyInvocation.MyCommand.Path) {
+		$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+	} else {
+		$scriptDir = (Get-Location).Path
+	}
+
+	try {
+		$WorkspaceRoot = (Resolve-Path (Join-Path $scriptDir "..")).Path
+	} catch {
+		$WorkspaceRoot = (Get-Location).Path
+	}
 }
 
 function Resolve-MSBuildPath {

@@ -3,6 +3,7 @@ Custom Build/
 build/
 dist/
 out/
+dist/
 *.exe
 *.dll
 *.pdb
@@ -20,6 +21,8 @@ custom_scummvm-2026.1.0/devtools/create_project/msvc/Release/
 
 # Game assets / extracted data
 The Last Express/
+lastexpress/
+clean_scummvm-2026.1.0/
 tools/*_extracted/
 tools/ALL-BG/
 tools/output/
@@ -33,6 +36,7 @@ translation/*.log
 translation/*.bak
 *.tmp
 *.cache
+_tmp_commit_package/
 
 # Archives and binaries
 *.7z

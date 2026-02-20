@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-	[string]$WorkspaceRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path,
+	[string]$WorkspaceRoot = "",
 	[string]$SourceRoot = "",
 	[string]$TargetRoot = "",
 	[switch]$DryRun
@@ -16,6 +16,23 @@ function Step([string]$Message) {
 function Fail([int]$Code, [string]$Message) {
 	Write-Error $Message
 	exit $Code
+}
+
+if ([string]::IsNullOrWhiteSpace($WorkspaceRoot)) {
+	$scriptDir = ""
+	if ($PSScriptRoot) {
+		$scriptDir = $PSScriptRoot
+	} elseif ($MyInvocation.MyCommand.Path) {
+		$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+	} else {
+		$scriptDir = (Get-Location).Path
+	}
+
+	try {
+		$WorkspaceRoot = (Resolve-Path (Join-Path $scriptDir "..")).Path
+	} catch {
+		$WorkspaceRoot = (Get-Location).Path
+	}
 }
 
 if ([string]::IsNullOrWhiteSpace($SourceRoot)) {
