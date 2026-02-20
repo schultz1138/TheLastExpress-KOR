@@ -1,0 +1,48 @@
+# Build outputs
+Custom Build/
+build/
+dist/
+out/
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.obj
+*.lib
+
+# Snapshot build artifacts
+custom_scummvm-2026.1.0/vcpkg_installed/
+custom_scummvm-2026.1.0/.vs/
+custom_scummvm-2026.1.0/dists/msvc/Debug*/
+custom_scummvm-2026.1.0/dists/msvc/Release*/
+custom_scummvm-2026.1.0/devtools/create_project/msvc/Debug/
+custom_scummvm-2026.1.0/devtools/create_project/msvc/Release/
+
+# Game assets / extracted data
+The Last Express/
+tools/*_extracted/
+tools/ALL-BG/
+tools/output/
+overlay_in/
+
+# Temporary and logs
+translation/_tmp*/
+translation/_work*/
+translation/_release_overlay_input*/
+translation/*.log
+translation/*.bak
+*.tmp
+*.cache
+
+# Archives and binaries
+*.7z
+*.zip
+*.rar
+*.bin
+*.iso
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
