@@ -7,7 +7,7 @@ param(
     [string]$WorkDir = "",
     [string]$BgPatchDir = "",
     [string]$CustomBmpDir = "",
-    [string]$ModedHpf = "",
+    [string]$AllSubsHpf = "",
     [string]$SubtitleTsv = "",
     [switch]$AllowSeedOnly,
     [switch]$AllowSubtitleOnly,
@@ -22,8 +22,50 @@ function Step([string]$Message) {
 }
 
 function Fail([int]$Code, [string]$Message) {
-    Write-Error $Message
+    Write-Host "[ERROR] $Message" -ForegroundColor Red
     exit $Code
+}
+
+function Resolve-PythonExe([string]$RootPath) {
+    foreach ($exe in @(
+        (Join-Path $RootPath "runtime\python\python.exe"),
+        (Join-Path $RootPath "python\python.exe")
+    )) {
+        if (-not (Test-Path $exe)) {
+            continue
+        }
+        try {
+            & $exe -c "import sys" *> $null
+            if ($LASTEXITCODE -eq 0) {
+                return $exe
+            }
+        } catch {
+        }
+    }
+
+    foreach ($name in @("py", "python", "python3")) {
+        $cmd = Get-Command $name -ErrorAction SilentlyContinue | Where-Object { $_.CommandType -eq "Application" } | Select-Object -First 1
+        if (-not $cmd) {
+            continue
+        }
+
+        $exe = [string]$cmd.Source
+        if ([string]::IsNullOrWhiteSpace($exe)) {
+            continue
+        }
+        if ($exe -match '\\Microsoft\\WindowsApps\\') {
+            continue
+        }
+
+        try {
+            & $exe -c "import sys" *> $null
+            if ($LASTEXITCODE -eq 0) {
+                return $exe
+            }
+        } catch {
+        }
+    }
+    return $null
 }
 
 if ([string]::IsNullOrWhiteSpace($WorkspaceRoot)) {
@@ -85,12 +127,9 @@ $cd2Hpf = Join-Path $GameDir "CD2.HPF"
 $cd3Hpf = Join-Path $GameDir "CD3.HPF"
 $templateArchives = @($baseHpf, $cd1Hpf, $cd2Hpf, $cd3Hpf)
 
-$py = Get-Command py -ErrorAction SilentlyContinue
-if (-not $py) {
-    $py = Get-Command python -ErrorAction SilentlyContinue
-}
-if (-not $py) {
-    Fail 10 "Python launcher 'py' or 'python' was not found."
+$pythonExe = Resolve-PythonExe $WorkspaceRoot
+if ([string]::IsNullOrWhiteSpace($pythonExe)) {
+    Fail 10 "Python 3 runtime not available. Install Python 3, or use a release package that includes runtime\python\python.exe."
 }
 
 $packScript = Join-Path $WorkspaceRoot "tools\hpf_pack.py"
@@ -170,40 +209,40 @@ if ($subkoLines.Count -gt 0) {
 }
 [System.IO.File]::WriteAllText($subkoOut, $subkoText, [System.Text.UTF8Encoding]::new($false))
 
-if ([string]::IsNullOrWhiteSpace($ModedHpf)) {
-    $modedCandidates = @(
-        (Join-Path $GameDir "Moded_HD.HPF"),
-        (Join-Path $WorkspaceRoot "translation\Moded_HD.HPF"),
-        (Join-Path $WorkspaceRoot "Moded_HD.HPF")
+if ([string]::IsNullOrWhiteSpace($AllSubsHpf)) {
+    $allSubsCandidates = @(
+        (Join-Path $GameDir "HD_AllSubs.HPF"),
+        (Join-Path $WorkspaceRoot "translation\HD_AllSubs.HPF"),
+        (Join-Path $WorkspaceRoot "HD_AllSubs.HPF")
     )
-    foreach ($candidate in $modedCandidates) {
+    foreach ($candidate in $allSubsCandidates) {
         if (Test-Path $candidate) {
-            $ModedHpf = $candidate
+            $AllSubsHpf = $candidate
             break
         }
     }
 }
 
-if (-not [string]::IsNullOrWhiteSpace($ModedHpf)) {
-    if (-not (Test-Path $ModedHpf)) {
-        Fail 14 "Moded HD archive not found: $ModedHpf"
+if (-not [string]::IsNullOrWhiteSpace($AllSubsHpf)) {
+    if (-not (Test-Path $AllSubsHpf)) {
+        Fail 14 "All-subs HD archive not found: $AllSubsHpf"
     }
 
-    Step "Seed SBE data from Moded_HD.HPF"
-    $modedExtractDir = Join-Path $WorkDir "moded_extract"
-    New-Item -ItemType Directory -Path $modedExtractDir -Force | Out-Null
-    & $py.Source $unpackScript $ModedHpf $modedExtractDir
+    Step "Seed SBE data from HD_AllSubs.HPF"
+    $allSubsExtractDir = Join-Path $WorkDir "allsubs_extract"
+    New-Item -ItemType Directory -Path $allSubsExtractDir -Force | Out-Null
+    & $pythonExe $unpackScript $AllSubsHpf $allSubsExtractDir
     if ($LASTEXITCODE -ne 0) {
-        Fail 15 "hpf_unpack.py failed while reading Moded HD archive (exit code: $LASTEXITCODE)"
+        Fail 15 "hpf_unpack.py failed while reading HD_AllSubs archive (exit code: $LASTEXITCODE)"
     }
 
-    $sbeFiles = Get-ChildItem -Path $modedExtractDir -File -Filter *.SBE
+    $sbeFiles = Get-ChildItem -Path $allSubsExtractDir -File -Filter *.SBE
     foreach ($sbe in $sbeFiles) {
         Copy-Item -Path $sbe.FullName -Destination (Join-Path $stageDir $sbe.Name) -Force
     }
     Write-Host ("  Seeded SBE files: {0}" -f $sbeFiles.Count)
 } else {
-    Write-Host "[WARN] Moded_HD.HPF not found. Some spoken lines may not show subtitles." -ForegroundColor Yellow
+    Write-Host "[WARN] HD_AllSubs.HPF not found. Some spoken lines may not show subtitles." -ForegroundColor Yellow
 }
 
 $appliedGraphics = $false
@@ -213,7 +252,7 @@ if (Test-Path $patchManifest) {
     if (-not $hasAllArchives) {
         Fail 26 "Applying BG patchset requires HD.HPF and CD1~CD3.HPF."
     }
-    & $py.Source $applyPatchsetScript --game-dir $GameDir --patch-dir $BgPatchDir --out-dir $stageDir --strict-hash
+    & $pythonExe $applyPatchsetScript --game-dir $GameDir --patch-dir $BgPatchDir --out-dir $stageDir --strict-hash
     if ($LASTEXITCODE -ne 0) {
         Fail 27 "apply_bg_patchset.py failed (exit code: $LASTEXITCODE)"
     }
@@ -245,7 +284,7 @@ if (Test-Path $patchManifest) {
             $bgListPath,
             "--strict"
         )
-        & $py.Source $extractSelectedScript @extractArgs
+        & $pythonExe $extractSelectedScript @extractArgs
         if ($LASTEXITCODE -ne 0) {
             Fail 29 "hpf_extract_selected.py failed (exit code: $LASTEXITCODE)"
         }
@@ -254,7 +293,7 @@ if (Test-Path $patchManifest) {
             $baseName = [System.IO.Path]::GetFileNameWithoutExtension($bmp.Name).ToUpperInvariant()
             $templateBg = Join-Path $templateDir "$baseName.BG"
             $outBg = Join-Path $stageDir "$baseName.BG"
-            & $py.Source $bmpToBgScript $bmp.FullName $outBg --template-bg $templateBg
+            & $pythonExe $bmpToBgScript $bmp.FullName $outBg --template-bg $templateBg
             if ($LASTEXITCODE -ne 0) {
                 Fail 30 "BMP->BG conversion failed: $($bmp.Name)"
             }
@@ -309,16 +348,16 @@ if (Test-Path $OutputHpf) {
     $backupPath = "$OutputHpf.bak.$(Get-Date -Format yyyyMMdd_HHmmss)"
     Copy-Item -Path $OutputHpf -Destination $backupPath -Force
 }
-& $py.Source $packScript $stageDir $OutputHpf
+& $pythonExe $packScript $stageDir $OutputHpf
 if ($LASTEXITCODE -ne 0) {
     Fail 40 "hpf_pack.py failed (exit code: $LASTEXITCODE)"
 }
 
 Step "Validate KOREAN.HPF"
 if (Test-Path $baseHpf) {
-    & $py.Source $validateScript $OutputHpf --base-hpf $baseHpf
+    & $pythonExe $validateScript $OutputHpf --base-hpf $baseHpf
 } else {
-    & $py.Source $validateScript $OutputHpf
+    & $pythonExe $validateScript $OutputHpf
 }
 if ($LASTEXITCODE -ne 0) {
     Fail 50 "validate_korean_hpf.py failed (exit code: $LASTEXITCODE)"
@@ -330,6 +369,6 @@ if (-not $KeepWorkDir) {
 }
 
 Write-Host ""
-Write-Host "build_korean_hpf_from_moded.ps1 complete" -ForegroundColor Green
+Write-Host "build_korean_hpf.ps1 complete" -ForegroundColor Green
 Write-Host "Output: $OutputHpf"
 exit 0

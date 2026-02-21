@@ -17,8 +17,50 @@ function Step([string]$Message) {
 }
 
 function Fail([int]$Code, [string]$Message) {
-    Write-Error $Message
+    Write-Host "[ERROR] $Message" -ForegroundColor Red
     exit $Code
+}
+
+function Resolve-PythonExe([string]$RootPath) {
+    foreach ($exe in @(
+        (Join-Path $RootPath "runtime\python\python.exe"),
+        (Join-Path $RootPath "python\python.exe")
+    )) {
+        if (-not (Test-Path $exe)) {
+            continue
+        }
+        try {
+            & $exe -c "import sys" *> $null
+            if ($LASTEXITCODE -eq 0) {
+                return $exe
+            }
+        } catch {
+        }
+    }
+
+    foreach ($name in @("py", "python", "python3")) {
+        $cmd = Get-Command $name -ErrorAction SilentlyContinue | Where-Object { $_.CommandType -eq "Application" } | Select-Object -First 1
+        if (-not $cmd) {
+            continue
+        }
+
+        $exe = [string]$cmd.Source
+        if ([string]::IsNullOrWhiteSpace($exe)) {
+            continue
+        }
+        if ($exe -match '\\Microsoft\\WindowsApps\\') {
+            continue
+        }
+
+        try {
+            & $exe -c "import sys" *> $null
+            if ($LASTEXITCODE -eq 0) {
+                return $exe
+            }
+        } catch {
+        }
+    }
+    return $null
 }
 
 if ([string]::IsNullOrWhiteSpace($WorkspaceRoot)) {
@@ -82,12 +124,9 @@ foreach ($path in @($extractSelectedScript, $bgToBmpScript)) {
     }
 }
 
-$py = Get-Command py -ErrorAction SilentlyContinue
-if (-not $py) {
-    $py = Get-Command python -ErrorAction SilentlyContinue
-}
-if (-not $py) {
-    Fail 14 "Python launcher 'py' or 'python' was not found."
+$pythonExe = Resolve-PythonExe $WorkspaceRoot
+if ([string]::IsNullOrWhiteSpace($pythonExe)) {
+    Fail 14 "Python 3 runtime not available. Install Python 3, or use a release package that includes runtime\python\python.exe."
 }
 
 $bgNames = New-Object System.Collections.Generic.List[string]
@@ -160,13 +199,13 @@ $extractArgs = @(
 if (-not $AllowMissing) {
     $extractArgs += "--strict"
 }
-& $py.Source $extractSelectedScript @extractArgs
+& $pythonExe $extractSelectedScript @extractArgs
 if ($LASTEXITCODE -ne 0) {
     Fail 20 "BG extract failed (exit code: $LASTEXITCODE)"
 }
 
 Step "Convert BG -> BMP"
-& $py.Source $bgToBmpScript $extractDir $OutputBmpDir
+& $pythonExe $bgToBmpScript $extractDir $OutputBmpDir
 if ($LASTEXITCODE -ne 0) {
     Fail 21 "BG conversion failed (exit code: $LASTEXITCODE)"
 }

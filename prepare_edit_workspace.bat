@@ -34,15 +34,15 @@ if not exist "%GAME_DIR%\CD3.HPF" (
     goto :fail
 )
 
-if exist "%GAME_DIR%\Moded_HD.HPF" (
+if exist "%GAME_DIR%\HD_AllSubs.HPF" (
     echo [STEP] Extract editable subtitle template
-    powershell -NoProfile -ExecutionPolicy Bypass -File "%SUB_SCRIPT%" -WorkspaceRoot "%PATCH_ROOT%" -GameDir "%GAME_DIR%" -ModedHpf "%GAME_DIR%\Moded_HD.HPF"
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%SUB_SCRIPT%" -WorkspaceRoot "%PATCH_ROOT%" -GameDir "%GAME_DIR%" -AllSubsHpf "%GAME_DIR%\HD_AllSubs.HPF"
     if errorlevel 1 (
         echo [ERROR] Subtitle template extraction failed.
         goto :fail
     )
 ) else (
-    echo [WARN] Moded_HD.HPF not found. Subtitle template extraction skipped.
+    echo [WARN] HD_AllSubs.HPF not found. Subtitle template extraction skipped.
 )
 
 echo [STEP] Extract BG templates from HPF

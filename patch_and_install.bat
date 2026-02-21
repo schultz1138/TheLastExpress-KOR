@@ -35,14 +35,14 @@ if errorlevel 1 (
     )
 )
 
-set "MODED_HPF="
-if exist "%GAME_DIR%\Moded_HD.HPF" (
-    set "MODED_HPF=%GAME_DIR%\Moded_HD.HPF"
+set "ALLSUBS_HPF="
+if exist "%GAME_DIR%\HD_AllSubs.HPF" (
+    set "ALLSUBS_HPF=%GAME_DIR%\HD_AllSubs.HPF"
 )
 
 echo [STEP] Build KOREAN.HPF
-if defined MODED_HPF (
-    powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_PATH%" -GameDir "%GAME_DIR%" -ModedHpf "%MODED_HPF%"
+if defined ALLSUBS_HPF (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_PATH%" -GameDir "%GAME_DIR%" -AllSubsHpf "%ALLSUBS_HPF%"
 ) else (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_PATH%" -GameDir "%GAME_DIR%"
 )
@@ -59,6 +59,32 @@ if exist "%PATCH_ROOT%\runtime\" (
         goto :fail
     )
     rmdir /s /q "%PATCH_ROOT%\runtime"
+)
+
+echo [STEP] Create desktop shortcut
+set "GAME_DIR_PS=%GAME_DIR%"
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+ "$ErrorActionPreference='Stop';" ^
+ "$DesktopPath=[Environment]::GetFolderPath('Desktop');" ^
+ "if([string]::IsNullOrWhiteSpace($DesktopPath)){throw 'Desktop path not found.'};" ^
+ "$WshShell=New-Object -ComObject WScript.Shell;" ^
+ "$Shortcut=$WshShell.CreateShortcut((Join-Path $DesktopPath 'The Last Express (KOR).lnk'));" ^
+ "$GameDir=$env:GAME_DIR_PS;" ^
+ "$TargetPath=(Join-Path $GameDir 'start.bat');" ^
+ "if(-not (Test-Path $TargetPath)){throw 'start.bat not found in game folder.'};" ^
+ "$Shortcut.TargetPath=$TargetPath;" ^
+ "$Shortcut.WorkingDirectory=$GameDir;" ^
+ "$IconPath=(Join-Path $GameDir 'LastExpress.ico');" ^
+ "if(Test-Path $IconPath){$Shortcut.IconLocation=$IconPath};" ^
+ "$Shortcut.Save()"
+if errorlevel 1 (
+    echo [WARN] Desktop shortcut creation failed.
+) else (
+    if exist "%GAME_DIR%\LastExpress.ico" (
+        echo [INFO] Desktop shortcut created with LastExpress.ico
+    ) else (
+        echo [WARN] LastExpress.ico not found. Shortcut uses default icon.
+    )
 )
 
 echo.
@@ -83,5 +109,6 @@ echo [HINT] This patcher already uses PowerShell ExecutionPolicy Bypass.
 echo [HINT] If it still fails, try:
 echo        1) Extract ZIP to a writable folder (not Program Files)
 echo        2) Right-click ZIP or files and use "Unblock" before running
+echo        3) Re-extract the latest release ZIP and run again
 pause
 exit /b 1

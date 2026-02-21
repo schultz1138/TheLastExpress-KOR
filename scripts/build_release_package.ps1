@@ -86,7 +86,7 @@ $patchFiles = @(
     "patch_and_install.bat",
     "prepare_edit_workspace.bat",
     "scripts\apply_korean_patch.ps1",
-    "scripts\build_korean_hpf_from_moded.ps1",
+    "scripts\build_korean_hpf.ps1",
     "scripts\extract_subtitle_template.ps1",
     "scripts\extract_bg_templates.ps1",
     "tools\extract_kosubs_template.py",
@@ -105,6 +105,15 @@ foreach ($rel in $patchFiles) {
     $src = Join-Path $WorkspaceRoot $rel
     $dst = Join-Path $stageDir $rel
     Copy-IfExists $src $dst -Required
+}
+Copy-IfExists (Join-Path $WorkspaceRoot "LastExpress.ico") (Join-Path $stageDir "LastExpress.ico")
+
+$embeddedPythonDir = Join-Path $WorkspaceRoot "runtime\python"
+if (Test-Path (Join-Path $embeddedPythonDir "python.exe")) {
+    Step "Copy embedded Python runtime"
+    Copy-Item -Path $embeddedPythonDir -Destination (Join-Path $stageDir "runtime\python") -Recurse -Force
+} else {
+    Fail 21 "Embedded Python runtime not found: $embeddedPythonDir\\python.exe"
 }
 
 $bgPatchDir = Join-Path $WorkspaceRoot "translation\bgpatch"
@@ -144,7 +153,7 @@ $forbidden = @(
     "CD1.HPF",
     "CD2.HPF",
     "CD3.HPF",
-    "Moded_HD.HPF",
+    "HD_AllSubs.HPF",
     "kosubs.tsv",
     "*.BMP"
 )

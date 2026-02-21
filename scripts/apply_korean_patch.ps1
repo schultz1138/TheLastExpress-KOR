@@ -2,7 +2,7 @@
 param(
     [string]$WorkspaceRoot = "",
     [string]$GameDir = "",
-    [string]$ModedHpf = "",
+    [string]$AllSubsHpf = "",
     [string]$SubtitleTsv = "",
     [switch]$AllowSubtitleOnly,
     [switch]$KeepWorkDir
@@ -12,7 +12,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 function Fail([int]$Code, [string]$Message) {
-    Write-Error $Message
+    Write-Host "[ERROR] $Message" -ForegroundColor Red
     exit $Code
 }
 
@@ -53,7 +53,7 @@ if (-not (Test-Path $GameDir)) {
     Fail 11 "Game folder does not exist: $GameDir"
 }
 
-$buildScript = Join-Path $WorkspaceRoot "scripts\build_korean_hpf_from_moded.ps1"
+$buildScript = Join-Path $WorkspaceRoot "scripts\build_korean_hpf.ps1"
 if (-not (Test-Path $buildScript)) {
     Fail 12 "Build script was not found: $buildScript"
 }
@@ -67,8 +67,8 @@ $args = @{
 if ($AllowSubtitleOnly) {
     $args["AllowSubtitleOnly"] = $true
 }
-if (-not [string]::IsNullOrWhiteSpace($ModedHpf)) {
-    $args["ModedHpf"] = $ModedHpf
+if (-not [string]::IsNullOrWhiteSpace($AllSubsHpf)) {
+    $args["AllSubsHpf"] = $AllSubsHpf
 }
 if (-not [string]::IsNullOrWhiteSpace($SubtitleTsv)) {
     $args["SubtitleTsv"] = $SubtitleTsv

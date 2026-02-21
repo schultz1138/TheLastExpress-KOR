@@ -2,7 +2,7 @@
 param(
     [string]$WorkspaceRoot = "",
     [string]$GameDir = "",
-    [string]$ModedHpf = "",
+    [string]$AllSubsHpf = "",
     [string]$OutputTsv = "",
     [string]$MergeSubkoTsv = ""
 )
@@ -15,8 +15,50 @@ function Step([string]$Message) {
 }
 
 function Fail([int]$Code, [string]$Message) {
-    Write-Error $Message
+    Write-Host "[ERROR] $Message" -ForegroundColor Red
     exit $Code
+}
+
+function Resolve-PythonExe([string]$RootPath) {
+    foreach ($exe in @(
+        (Join-Path $RootPath "runtime\python\python.exe"),
+        (Join-Path $RootPath "python\python.exe")
+    )) {
+        if (-not (Test-Path $exe)) {
+            continue
+        }
+        try {
+            & $exe -c "import sys" *> $null
+            if ($LASTEXITCODE -eq 0) {
+                return $exe
+            }
+        } catch {
+        }
+    }
+
+    foreach ($name in @("py", "python", "python3")) {
+        $cmd = Get-Command $name -ErrorAction SilentlyContinue | Where-Object { $_.CommandType -eq "Application" } | Select-Object -First 1
+        if (-not $cmd) {
+            continue
+        }
+
+        $exe = [string]$cmd.Source
+        if ([string]::IsNullOrWhiteSpace($exe)) {
+            continue
+        }
+        if ($exe -match '\\Microsoft\\WindowsApps\\') {
+            continue
+        }
+
+        try {
+            & $exe -c "import sys" *> $null
+            if ($LASTEXITCODE -eq 0) {
+                return $exe
+            }
+        } catch {
+        }
+    }
+    return $null
 }
 
 if ([string]::IsNullOrWhiteSpace($WorkspaceRoot)) {
@@ -55,28 +97,28 @@ if ([string]::IsNullOrWhiteSpace($MergeSubkoTsv)) {
     $MergeSubkoTsv = Join-Path $WorkspaceRoot "translation\subko.tsv"
 }
 
-if ([string]::IsNullOrWhiteSpace($ModedHpf)) {
-    $modedCandidates = @()
+if ([string]::IsNullOrWhiteSpace($AllSubsHpf)) {
+    $allSubsCandidates = @()
     if (-not [string]::IsNullOrWhiteSpace($GameDir)) {
-        $modedCandidates += (Join-Path $GameDir "Moded_HD.HPF")
+        $allSubsCandidates += (Join-Path $GameDir "HD_AllSubs.HPF")
     }
-    $modedCandidates += @(
-        (Join-Path $WorkspaceRoot "translation\Moded_HD.HPF"),
-        (Join-Path $WorkspaceRoot "Moded_HD.HPF")
+    $allSubsCandidates += @(
+        (Join-Path $WorkspaceRoot "translation\HD_AllSubs.HPF"),
+        (Join-Path $WorkspaceRoot "HD_AllSubs.HPF")
     )
-    foreach ($candidate in $modedCandidates) {
+    foreach ($candidate in $allSubsCandidates) {
         if (Test-Path $candidate) {
-            $ModedHpf = $candidate
+            $AllSubsHpf = $candidate
             break
         }
     }
 }
 
-if ([string]::IsNullOrWhiteSpace($ModedHpf)) {
-    Fail 10 "Moded HD archive was not found. Pass -ModedHpf explicitly."
+if ([string]::IsNullOrWhiteSpace($AllSubsHpf)) {
+    Fail 10 "HD_AllSubs archive was not found. Pass -AllSubsHpf explicitly."
 }
-if (-not (Test-Path $ModedHpf)) {
-    Fail 11 "Moded HD archive does not exist: $ModedHpf"
+if (-not (Test-Path $AllSubsHpf)) {
+    Fail 11 "HD_AllSubs archive does not exist: $AllSubsHpf"
 }
 
 $extractScript = Join-Path $WorkspaceRoot "tools\extract_kosubs_template.py"
@@ -84,21 +126,18 @@ if (-not (Test-Path $extractScript)) {
     Fail 12 "Extract script not found: $extractScript"
 }
 
-$py = Get-Command py -ErrorAction SilentlyContinue
-if (-not $py) {
-    $py = Get-Command python -ErrorAction SilentlyContinue
-}
-if (-not $py) {
-    Fail 13 "Python launcher 'py' or 'python' was not found."
+$pythonExe = Resolve-PythonExe $WorkspaceRoot
+if ([string]::IsNullOrWhiteSpace($pythonExe)) {
+    Fail 13 "Python 3 runtime not available. Install Python 3, or use a release package that includes runtime\python\python.exe."
 }
 
 Step "Extract editable subtitle template"
-$args = @("--hpf", $ModedHpf, "--out", $OutputTsv)
+$args = @("--hpf", $AllSubsHpf, "--out", $OutputTsv)
 if (Test-Path $MergeSubkoTsv) {
     $args += @("--merge-subko", $MergeSubkoTsv)
 }
 
-& $py.Source $extractScript @args
+& $pythonExe $extractScript @args
 if ($LASTEXITCODE -ne 0) {
     Fail 20 "Subtitle template extraction failed (exit code: $LASTEXITCODE)"
 }
