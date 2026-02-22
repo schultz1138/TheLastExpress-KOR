@@ -77,6 +77,7 @@ Copy-IfExists (Join-Path $CustomBuildDir "scummvm.exe") (Join-Path $stageDir "ru
 Copy-IfExists (Join-Path $CustomBuildDir "start.bat") (Join-Path $stageDir "runtime\start.bat")
 Copy-IfExists (Join-Path $CustomBuildDir "scummvm.ini") (Join-Path $stageDir "runtime\scummvm.ini")
 Copy-IfExists (Join-Path $CustomBuildDir "Korean.ttf") (Join-Path $stageDir "runtime\Korean.ttf")
+Copy-IfExists (Join-Path $WorkspaceRoot "runtime\LastExpress.ico") (Join-Path $stageDir "runtime\LastExpress.ico") -Required
 Get-ChildItem -Path $CustomBuildDir -Filter *.dll -File | ForEach-Object {
     Copy-IfExists $_.FullName (Join-Path $stageDir ("runtime\{0}" -f $_.Name)) -Required
 }
@@ -84,7 +85,8 @@ Get-ChildItem -Path $CustomBuildDir -Filter *.dll -File | ForEach-Object {
 Step "Copy patcher files"
 $patchFiles = @(
     "patch_and_install.bat",
-    "prepare_edit_workspace.bat",
+    "translation\prepare_edit_workspace.bat",
+    "translation\TRS_README.md",
     "scripts\apply_korean_patch.ps1",
     "scripts\build_korean_hpf.ps1",
     "scripts\extract_subtitle_template.ps1",
@@ -106,7 +108,6 @@ foreach ($rel in $patchFiles) {
     $dst = Join-Path $stageDir $rel
     Copy-IfExists $src $dst -Required
 }
-Copy-IfExists (Join-Path $WorkspaceRoot "LastExpress.ico") (Join-Path $stageDir "LastExpress.ico")
 
 $embeddedPythonDir = Join-Path $WorkspaceRoot "runtime\python"
 if (Test-Path (Join-Path $embeddedPythonDir "python.exe")) {

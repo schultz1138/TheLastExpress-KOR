@@ -69,10 +69,11 @@
 - 설치 배치 (`patch_and_install.bat`)
 - 자동 패처 스크립트
 - 전용 ScummVM 실행 파일
-- 런처 아이콘(`LastExpress.ico`)
+- 런처 아이콘(`runtime/LastExpress.ico`)
 - 한국어 자막 소스(`translation/subko.tsv`)
 - BG 패치셋(`translation/bgpatch`, 있는 경우)
-- 자막/BG 편집용 추출 도구 (`prepare_edit_workspace.bat`, `scripts/extract_*`)
+- 자막/BG 편집용 추출 도구 (`translation/prepare_edit_workspace.bat`, `scripts/extract_*`)
+- 고급 가이드 (`translation/TRS_README.md`)
 
 미포함:
 
@@ -86,7 +87,7 @@
 게임 폴더에서 아래를 실행하면 로컬 파일로 편집용 템플릿을 생성할 수 있습니다.
 
 ```bat
-prepare_edit_workspace.bat
+translation\prepare_edit_workspace.bat
 ```
 
 생성물:

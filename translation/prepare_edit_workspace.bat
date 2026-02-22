@@ -1,8 +1,9 @@
 @echo off
 setlocal
 
-cd /d "%~dp0"
-set "PATCH_ROOT=%cd%"
+set "SCRIPT_DIR=%~dp0"
+cd /d "%SCRIPT_DIR%"
+for %%I in ("%SCRIPT_DIR%..") do set "PATCH_ROOT=%%~fI"
 set "GAME_DIR=%PATCH_ROOT%"
 
 set "SUB_SCRIPT=%PATCH_ROOT%\scripts\extract_subtitle_template.ps1"

@@ -24,7 +24,7 @@
 로컬 템플릿 추출:
 
 ```bat
-prepare_edit_workspace.bat
+translation\prepare_edit_workspace.bat
 ```
 
 BG 패치셋 생성:
