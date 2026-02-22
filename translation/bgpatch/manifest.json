@@ -941,10 +941,10 @@
       "name": "KSTORY02.BG",
       "ops": 1,
       "patch_file": "KSTORY02.BG.BGP",
-      "patch_size": 196629,
+      "patch_size": 161920,
       "source_archive": "CD2.HPF",
-      "target_sha256": "181ba1005a71e57b9b12025a2d6fcccca7d3175a1eaeda4d408298c9ac399646",
-      "target_size": 358684
+      "target_sha256": "9959d22db0fc17be2ec84a1fda4e584210e32981e374ea4fab513f1714147152",
+      "target_size": 314901
     },
     {
       "base_sha256": "f071b0480f31845daa30d45b59febbc2ddccca306f980164918a4e16877324c9",
@@ -952,10 +952,10 @@
       "name": "KSTORY04.BG",
       "ops": 1,
       "patch_file": "KSTORY04.BG.BGP",
-      "patch_size": 224879,
+      "patch_size": 179462,
       "source_archive": "CD2.HPF",
-      "target_sha256": "746fb4f92b4d93aed113dccdd4e12f79a5b9e8e7b56f5cd36d1dc527c92e842a",
-      "target_size": 388739
+      "target_sha256": "27c0e3449dfc48aefcc4ab4525bc21d299723ee0937ddaca59ff9cfaf596dede",
+      "target_size": 332223
     },
     {
       "base_sha256": "de158a74b1fe7bc7e083de39360ee82fae67dacf3cb6ef1584fb316d32a2e700",
@@ -963,10 +963,10 @@
       "name": "KSTORY05.BG",
       "ops": 1,
       "patch_file": "KSTORY05.BG.BGP",
-      "patch_size": 223634,
+      "patch_size": 173677,
       "source_archive": "CD2.HPF",
-      "target_sha256": "92c9926f2b1e7a3172dcead185cecfb3126eaec7b360b3bda397aafd2d984333",
-      "target_size": 387028
+      "target_sha256": "4aa7be00c2df016f0a77d1ca45e4389235d267fb6a71d3dfb49475434709e02d",
+      "target_size": 328137
     },
     {
       "base_sha256": "d488b966ae0f9de7b9f273531c2d901c6bdbe23c1a3f7fb1410b8977a219bfbd",
@@ -974,10 +974,10 @@
       "name": "KSTORY06.BG",
       "ops": 1,
       "patch_file": "KSTORY06.BG.BGP",
-      "patch_size": 229857,
+      "patch_size": 176119,
       "source_archive": "CD2.HPF",
-      "target_sha256": "6eb76864a0280ef89dcfaa7f5a2bc3b9b1d2e4808b50d2aeb5b4afb4b87bff33",
-      "target_size": 394260
+      "target_sha256": "fc45c9a35cf39f486a189b360ee1b3c55ac5cece01a71ab4b2eb408cd6de08a5",
+      "target_size": 328426
     },
     {
       "base_sha256": "402f1420556f48c3a01a315bda4c2d09bef9b90d402b10a1f7f6431892a4eaf8",
@@ -985,10 +985,10 @@
       "name": "KSTORY07.BG",
       "ops": 1,
       "patch_file": "KSTORY07.BG.BGP",
-      "patch_size": 191637,
+      "patch_size": 156075,
       "source_archive": "CD2.HPF",
-      "target_sha256": "cad10a82a73890022764368699bccf98bd7c54e69c28da6930275ad7aaa0d735",
-      "target_size": 354915
+      "target_sha256": "ec015472dc1783b95add478caa7fb4b5b705c3aee31edd6975f1890bb0a001cc",
+      "target_size": 311898
     },
     {
       "base_sha256": "92002f283a58c41b777580db51c6057b0ceba7500960bdaae835ae2262bc7a31",
