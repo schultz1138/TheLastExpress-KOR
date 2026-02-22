@@ -380,10 +380,10 @@
       "name": "F2C2A.BG",
       "ops": 1,
       "patch_file": "F2C2A.BG.BGP",
-      "patch_size": 97958,
+      "patch_size": 97984,
       "source_archive": "CD1.HPF",
-      "target_sha256": "78e58c1b0dd58518d0338d6a2fa20a5348313f9ade71ab5ec5a6fbfde1284147",
-      "target_size": 269022
+      "target_sha256": "a122fad217ef63d34709a77b9d42822bea1cde87073ff5ad847c8389538cf78e",
+      "target_size": 269097
     },
     {
       "base_sha256": "11aebd37ddb22139e4591589cd5defc1dae9fc30e3abaa162485a57a2a230449",
@@ -457,10 +457,10 @@
       "name": "F2C3A.BG",
       "ops": 1,
       "patch_file": "F2C3A.BG.BGP",
-      "patch_size": 99043,
+      "patch_size": 99111,
       "source_archive": "CD1.HPF",
-      "target_sha256": "91a8ea4293b26358e6bdebdd3a0b950b6d5d12f7f743045ec15711ccfd4723d1",
-      "target_size": 269394
+      "target_sha256": "bbfada3867d501502d19d37dd88d99d79aa89e5a10304fe426fac86ecbae6776",
+      "target_size": 269504
     },
     {
       "base_sha256": "765865bcc028fe6c1bf6485b51743abdf773d78ba59110cab33372a158c50799",
@@ -490,10 +490,10 @@
       "name": "F2C3D.BG",
       "ops": 1,
       "patch_file": "F2C3D.BG.BGP",
-      "patch_size": 140324,
+      "patch_size": 141122,
       "source_archive": "CD1.HPF",
-      "target_sha256": "ecea517ad82c96fe1f253998d0b9715292cd7fe047a2ce1538c1ff97a2fa4aba",
-      "target_size": 325747
+      "target_sha256": "8a451f92e00551b6f6590ed809ef8c497f3d969d2b4c8fd177798e8feac8f974",
+      "target_size": 325944
     },
     {
       "base_sha256": "123839294c8d6143b85946ad5fecc33dc16c749279ece5ab159e6dd704c8ed73",
@@ -534,10 +534,10 @@
       "name": "F2C4A.BG",
       "ops": 1,
       "patch_file": "F2C4A.BG.BGP",
-      "patch_size": 96790,
+      "patch_size": 96805,
       "source_archive": "CD1.HPF",
-      "target_sha256": "0029e1f96838221e417c2b7df996efa6ff83af33f0ab07bfc1363c855db4148a",
-      "target_size": 267700
+      "target_sha256": "a6133eade092bd2727d58e883c27491416eafb51de914f308f39b1d514f8ffdc",
+      "target_size": 267769
     },
     {
       "base_sha256": "a50eb18549e9f0724936b961aa36a242108d27120c3bb9014bfd9d28e4325dd0",
@@ -655,10 +655,21 @@
       "name": "F2C5E.BG",
       "ops": 1,
       "patch_file": "F2C5E.BG.BGP",
-      "patch_size": 144686,
+      "patch_size": 144822,
       "source_archive": "CD1.HPF",
-      "target_sha256": "8b5ea5ce862564aeeb2714d11b0816f4e78397a1042bcb7c3ff3e0ba65dd1aef",
-      "target_size": 337852
+      "target_sha256": "2b16d0209330a77cc5b5e0ebd30b0a4f2f987405e2cd24cb58da8ca22da5b3c2",
+      "target_size": 338976
+    },
+    {
+      "base_sha256": "429f656c2866dff60b20c0dd5bf6a770cc921702b554b17d1bdda98d455aed0b",
+      "base_size": 282624,
+      "name": "F2C5F.BG",
+      "ops": 1,
+      "patch_file": "F2C5F.BG.BGP",
+      "patch_size": 141708,
+      "source_archive": "CD1.HPF",
+      "target_sha256": "4f18ae05b391c8a3bd9870d880f6013b65ace94dcf17dc762ff1f506f5fabd7b",
+      "target_size": 335762
     },
     {
       "base_sha256": "39c71729cb607b449c1d1e64ebf3ec2e45a58e098ee2f4d1ad9c8031630b7627",
@@ -666,10 +677,10 @@
       "name": "F2C5G.BG",
       "ops": 1,
       "patch_file": "F2C5G.BG.BGP",
-      "patch_size": 141093,
+      "patch_size": 140895,
       "source_archive": "CD1.HPF",
-      "target_sha256": "5c2491dd12ad9011aa2246f7e7958748b13df15f2beb685d77e32528abc1d2f6",
-      "target_size": 333201
+      "target_sha256": "78b263eae63a9479a45c61ee8307a8e99027c33ea9b1ec8fd21d81ff8f2ec0cb",
+      "target_size": 333167
     },
     {
       "base_sha256": "de2c0bf61c00c315cac1d57ecbb156f528fec63dda16d1e3674842818da1496a",
@@ -776,10 +787,10 @@
       "name": "FBPOEM01.BG",
       "ops": 1,
       "patch_file": "FBPOEM01.BG.BGP",
-      "patch_size": 144317,
+      "patch_size": 144425,
       "source_archive": "CD2.HPF",
-      "target_sha256": "0d2d452aaf28ab7b3e5f40d355415212f95df75a9bcf34159fc40a1c4e2b21e4",
-      "target_size": 279102
+      "target_sha256": "13b7035fec59c5a65cd302f8787b8bfc3ae2e977583cf7ecd7c2554f63350b01",
+      "target_size": 279186
     },
     {
       "base_sha256": "23007955c72fda66b4c629728c788edb2e061329923c298dd7b1975e6153be7b",
@@ -787,10 +798,10 @@
       "name": "FBPOEM02.BG",
       "ops": 1,
       "patch_file": "FBPOEM02.BG.BGP",
-      "patch_size": 151179,
+      "patch_size": 151265,
       "source_archive": "CD2.HPF",
-      "target_sha256": "37bdca0dd10902bd600feb39f2bdac05ed88c619833370a4e194da16a2e347bf",
-      "target_size": 285400
+      "target_sha256": "13acf91eed18a3465f6c9ffa56acbfe4eefcd7d74bde2ad7c518f6996f4fe0c5",
+      "target_size": 285490
     },
     {
       "base_sha256": "056118ddc5903e3ceb984a605678e026f9bb458822948197476a5707aabaa339",
@@ -798,10 +809,10 @@
       "name": "FBPOEM03.BG",
       "ops": 1,
       "patch_file": "FBPOEM03.BG.BGP",
-      "patch_size": 140628,
+      "patch_size": 140716,
       "source_archive": "CD2.HPF",
-      "target_sha256": "ab1c06b4bff61cb182edc122056360e85b60fbefb3aee310489eb4b5ece7234a",
-      "target_size": 275893
+      "target_sha256": "3ec7e130e1b85618f7402d8e96cfad4999444a030c55449d116f513b1a88fcd9",
+      "target_size": 275983
     },
     {
       "base_sha256": "b67804186cd4f19c8b9ba651af555378f88394d301cdada6e0211155fdfa09a2",
@@ -809,10 +820,10 @@
       "name": "FBPOEM04.BG",
       "ops": 1,
       "patch_file": "FBPOEM04.BG.BGP",
-      "patch_size": 139536,
+      "patch_size": 139656,
       "source_archive": "CD2.HPF",
-      "target_sha256": "7c1619711feed4f131d27ea666d485daa92edbe2b8290475daa2258fc9ceb476",
-      "target_size": 276347
+      "target_sha256": "281399156adccc337819f2129ba1a51dce6b4953674ae9f696bdaa7b97055780",
+      "target_size": 276396
     },
     {
       "base_sha256": "0eed78822aa88b57b45377ca5cb46e1b95d0921605f11fb3be7653d3a77af58e",
@@ -820,10 +831,10 @@
       "name": "KDOSS01.BG",
       "ops": 1,
       "patch_file": "KDOSS01.BG.BGP",
-      "patch_size": 163590,
+      "patch_size": 163612,
       "source_archive": "CD2.HPF",
-      "target_sha256": "91af53c72cdf13d42feccbfbc695c24a5423d5def225a0a15c0c73281a72cd8b",
-      "target_size": 301057
+      "target_sha256": "6173ed38681abf7b5f59309252d1ff7ce3899800f6114df087ecda7027975f3d",
+      "target_size": 301191
     },
     {
       "base_sha256": "151ea0a566e72ce70ddd52ba1ead1ab653fc2d8ee8f1ed457dbcc48710fa213e",
@@ -831,10 +842,10 @@
       "name": "KDOSS02.BG",
       "ops": 1,
       "patch_file": "KDOSS02.BG.BGP",
-      "patch_size": 163067,
+      "patch_size": 163227,
       "source_archive": "CD2.HPF",
-      "target_sha256": "360f4f19deb8e1416b8e38a1337df6ac0060d54a5ef73b6594b59f6cf56c7682",
-      "target_size": 299951
+      "target_sha256": "7caebad6973725c392313beeed36a14a2c4f5889ecd0f1f1d407d6195ad6be13",
+      "target_size": 300010
     },
     {
       "base_sha256": "2b7ce402d4230a5cf44b7a497eadc587e1de0b41389fa8a43111ec67b8a2c82e",
@@ -842,10 +853,10 @@
       "name": "KDOSS03.BG",
       "ops": 1,
       "patch_file": "KDOSS03.BG.BGP",
-      "patch_size": 173384,
+      "patch_size": 173726,
       "source_archive": "CD2.HPF",
-      "target_sha256": "45780c99d2c18bcc2b0756d085188b95a4271cb346ce38da947a79edef8aff55",
-      "target_size": 317545
+      "target_sha256": "72beddd33b260e0f3bab9494b7057962c94d76ef64017972df682e4d4ab7c988",
+      "target_size": 317735
     },
     {
       "base_sha256": "f1d402141d2c34051a2ce44f8030d992dfd5c83cddf1b8a7c36dfe2958357eb4",
@@ -853,10 +864,10 @@
       "name": "KDOSS04.BG",
       "ops": 1,
       "patch_file": "KDOSS04.BG.BGP",
-      "patch_size": 154390,
+      "patch_size": 154668,
       "source_archive": "CD2.HPF",
-      "target_sha256": "909d17523159a49ee89b72ee991984affd0543801f6f82ea2f7b80acc3260217",
-      "target_size": 295835
+      "target_sha256": "67b171ce879143ad66c29ed6d418bea770a58aa5d813d1da4c95fe758549040c",
+      "target_size": 295979
     },
     {
       "base_sha256": "6ef232ad5a28476956b1f38ec348b13ada1b446bf7058843971df4badc9ec820",
@@ -952,10 +963,10 @@
       "name": "KSTORY04.BG",
       "ops": 1,
       "patch_file": "KSTORY04.BG.BGP",
-      "patch_size": 179462,
+      "patch_size": 179437,
       "source_archive": "CD2.HPF",
-      "target_sha256": "27c0e3449dfc48aefcc4ab4525bc21d299723ee0937ddaca59ff9cfaf596dede",
-      "target_size": 332223
+      "target_sha256": "4db023ebc42c89b55fecda76a4d00189a0d9784fbb0ae6ee23559079bed16c0e",
+      "target_size": 332269
     },
     {
       "base_sha256": "de158a74b1fe7bc7e083de39360ee82fae67dacf3cb6ef1584fb316d32a2e700",
@@ -1816,7 +1827,7 @@
       "target_size": 265711
     }
   ],
-  "entry_count": 165,
+  "entry_count": 166,
   "patch_magic": "BGPZ",
   "payload_magic": "BGP2",
   "version": 1
