@@ -330,6 +330,7 @@ Step "Merge font and optional overrides"
 $foundFont = $false
 foreach ($fontPath in @(
     (Join-Path $GameDir "korean.ttf"),
+    (Join-Path $WorkspaceRoot "runtime\korean.ttf"),
     (Join-Path $WorkspaceRoot "korean.ttf"),
     (Join-Path $KoOverrideDir "korean.ttf")
 )) {

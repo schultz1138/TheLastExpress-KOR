@@ -177,8 +177,7 @@ if ($IncludeSourceFiles) {
         "engine\scripts",
         "engine\DEV_README.md",
         "engine\PUBLISH_CHECKLIST.md",
-        "engine\SNAPSHOT_WORKFLOW.md",
-        "README.md"
+        "engine\SNAPSHOT_WORKFLOW.md"
     )
     foreach ($rel in $sourceItems) {
         $src = Join-Path $repoRoot $rel
