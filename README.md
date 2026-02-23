@@ -14,7 +14,7 @@ This repository is split into two areas:
    - rename fan subtitle `HD.HPF` to `HD_ALLSUBS.HPF`
    - place `HD_ALLSUBS.HPF` in game root (or `data`/`Data`)
 3. Copy the contents of `patch/` into that game folder.
-4. Run `patch_and_install.bat`.
+4. Run `patch_and_install.bat` (archive SHA256 is verified before build).
 5. Launch the game with `start.bat`.
 6. To remove patch files later, run `uninstall.bat`.
 

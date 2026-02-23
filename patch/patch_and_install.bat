@@ -50,6 +50,16 @@ if not defined ALLSUBS_HPF if exist "%GAME_DIR%\Data\HD_ALLSUBS.HPF" (
     set "ALLSUBS_HPF=%GAME_DIR%\Data\HD_ALLSUBS.HPF"
 )
 
+if /I "%KOR_SKIP_HASH_CHECK%"=="1" (
+    echo [WARN] SHA256 archive hash check skipped ^(KOR_SKIP_HASH_CHECK=1^)
+) else (
+    echo [STEP] Verify archive hashes ^(SHA256^)
+    call :verify_hashes "%GAME_DIR%" "%ALLSUBS_HPF%"
+    if errorlevel 1 (
+        goto :fail
+    )
+)
+
 echo [STEP] Build KOREAN.HPF
 if defined ALLSUBS_HPF (
     powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_PATH%" -GameDir "%GAME_DIR%" -AllSubsHpf "%ALLSUBS_HPF%"
@@ -147,6 +157,100 @@ if exist "%ARCH_DIR%\%ARCH_NAME%" exit /b 0
 if exist "%ARCH_DIR%\data\%ARCH_NAME%" exit /b 0
 if exist "%ARCH_DIR%\Data\%ARCH_NAME%" exit /b 0
 exit /b 1
+
+:resolve_archive_path
+set "ARCH_DIR=%~1"
+set "ARCH_NAME=%~2"
+set "%~3="
+if exist "%ARCH_DIR%\%ARCH_NAME%" (
+    set "%~3=%ARCH_DIR%\%ARCH_NAME%"
+    exit /b 0
+)
+if exist "%ARCH_DIR%\data\%ARCH_NAME%" (
+    set "%~3=%ARCH_DIR%\data\%ARCH_NAME%"
+    exit /b 0
+)
+if exist "%ARCH_DIR%\Data\%ARCH_NAME%" (
+    set "%~3=%ARCH_DIR%\Data\%ARCH_NAME%"
+    exit /b 0
+)
+exit /b 1
+
+:get_sha256
+set "HASH_TARGET=%~1"
+set "%~2="
+for /f "usebackq delims=" %%H in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "$p=$env:HASH_TARGET; if(Test-Path -LiteralPath $p){(Get-FileHash -Algorithm SHA256 -LiteralPath $p).Hash}" 2^>nul`) do (
+    set "%~2=%%H"
+)
+set "HASH_TARGET="
+if defined %~2 (
+    exit /b 0
+)
+exit /b 1
+
+:verify_archive_hash
+set "TARGET_PATH=%~1"
+set "DISPLAY_NAME=%~2"
+set "EXPECTED_HASH=%~3"
+call :get_sha256 "%TARGET_PATH%" ACTUAL_HASH
+if errorlevel 1 (
+    echo [WARN] Could not calculate hash for "%DISPLAY_NAME%"
+    echo        Path: "%TARGET_PATH%"
+    set "HASH_MISMATCH=1"
+    exit /b 1
+)
+if /I "%ACTUAL_HASH%"=="%EXPECTED_HASH%" (
+    echo [OK] %DISPLAY_NAME% hash matched
+    exit /b 0
+)
+echo [WARN] %DISPLAY_NAME% hash mismatch
+echo        Path    : "%TARGET_PATH%"
+echo        Expected: %EXPECTED_HASH%
+echo        Actual  : %ACTUAL_HASH%
+set "HASH_MISMATCH=1"
+exit /b 1
+
+:verify_hashes
+set "VH_GAME_DIR=%~1"
+set "VH_ALLSUBS=%~2"
+set "HASH_MISMATCH=0"
+
+call :verify_archive_hash "%VH_GAME_DIR%\HD.HPF" "HD.HPF" "0526D68F4D91212CD180CACCF8EB7F08AE1B8489FE0AC75AE60BDBC4A7D74C8C"
+call :resolve_archive_path "%VH_GAME_DIR%" "CD1.HPF" CD1_PATH
+if errorlevel 1 (
+    echo [WARN] CD1.HPF not found for hash check.
+    set "HASH_MISMATCH=1"
+) else (
+    call :verify_archive_hash "%CD1_PATH%" "CD1.HPF" "A594136C5DC020EB9A444E3AA60E6A341998A93E590CC8AD7C6B976E0907F83A"
+)
+call :resolve_archive_path "%VH_GAME_DIR%" "CD2.HPF" CD2_PATH
+if errorlevel 1 (
+    echo [WARN] CD2.HPF not found for hash check.
+    set "HASH_MISMATCH=1"
+) else (
+    call :verify_archive_hash "%CD2_PATH%" "CD2.HPF" "F26293A597DBBDC6D782A1FAA38D9B33A786055A9C96F1D1A26CBFD6ED0EC6D7"
+)
+call :resolve_archive_path "%VH_GAME_DIR%" "CD3.HPF" CD3_PATH
+if errorlevel 1 (
+    echo [WARN] CD3.HPF not found for hash check.
+    set "HASH_MISMATCH=1"
+) else (
+    call :verify_archive_hash "%CD3_PATH%" "CD3.HPF" "909542B8CDF3FFC58016FEF757858F9A4DF48D0E6A3DEBC3C873BDAB551E10BA"
+)
+
+if defined VH_ALLSUBS (
+    call :verify_archive_hash "%VH_ALLSUBS%" "HD_ALLSUBS.HPF" "F7FCC14E87731BAB2EC5A02E5634DD3189A46D0D002636560FFB51E9F5493F42"
+)
+
+if "%HASH_MISMATCH%"=="1" (
+    echo.
+    echo [WARN] One or more archive hashes did not match expected values.
+    choice /C YN /N /M "Continue anyway? [Y/N]: "
+    if errorlevel 2 (
+        exit /b 1
+    )
+)
+exit /b 0
 
 :fail
 echo.

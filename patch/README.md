@@ -48,4 +48,7 @@ Get-FileHash -Algorithm SHA256 ".\data\CD3.HPF"
 Get-FileHash -Algorithm SHA256 ".\HD_ALLSUBS.HPF"
 ```
 
+`patch_and_install.bat` runs this SHA256 check automatically before build.
+If you need to bypass the check, run with `KOR_SKIP_HASH_CHECK=1`.
+
 If `HD_ALLSUBS.HPF` is present and hash-matched, spoken subtitle seed data is included automatically.
