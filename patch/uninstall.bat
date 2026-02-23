@@ -5,26 +5,26 @@ cd /d "%~dp0"
 set "GAME_DIR=%cd%"
 set "MANIFEST_PATH=%GAME_DIR%\KOR_PATCH_INSTALL_MANIFEST.txt"
 
-echo [STEP] Remove desktop shortcut
+echo [STEP] 바탕화면 바로가기 삭제
 set "DESKTOP_PATH="
 for /f "usebackq delims=" %%D in (`powershell -NoProfile -ExecutionPolicy Bypass -Command "[Environment]::GetFolderPath('Desktop')"`) do set "DESKTOP_PATH=%%D"
 if defined DESKTOP_PATH (
     if exist "%DESKTOP_PATH%\The Last Express (KOR).lnk" (
         del /f /q "%DESKTOP_PATH%\The Last Express (KOR).lnk" >nul 2>&1
         if exist "%DESKTOP_PATH%\The Last Express (KOR).lnk" (
-            echo [WARN] Could not remove desktop shortcut.
+            echo [WARN] 바탕화면 바로가기를 삭제하지 못했습니다.
         ) else (
-            echo [OK] Removed desktop shortcut.
+            echo [OK] 바탕화면 바로가기를 삭제했습니다.
         )
     )
 )
 
 if exist "%MANIFEST_PATH%" (
-    echo [STEP] Remove installed files from manifest
+    echo [STEP] 매니페스트 기준 설치 파일 삭제
     for /f "usebackq delims=" %%L in ("%MANIFEST_PATH%") do call :process_line "%%L"
 ) else (
-    echo [WARN] Install manifest not found: %MANIFEST_PATH%
-    echo [WARN] Falling back to removing only KOREAN.HPF and shortcut.
+    echo [WARN] 설치 매니페스트를 찾지 못했습니다: %MANIFEST_PATH%
+    echo [WARN] KOREAN.HPF와 바로가기만 삭제합니다.
 )
 
 if exist "%GAME_DIR%\KOREAN.HPF" (
@@ -40,7 +40,7 @@ if exist "%GAME_DIR%\python" (
 )
 
 echo.
-echo [DONE] Uninstall completed.
+echo [DONE] 제거가 완료되었습니다.
 pause
 exit /b 0
 
@@ -76,9 +76,9 @@ if exist "%TARGET%" (
     attrib -r -h -s "%TARGET%" >nul 2>&1
     del /f /q "%TARGET%" >nul 2>&1
     if exist "%TARGET%" (
-        echo [WARN] Could not remove "%REL%"
+        echo [WARN] "%REL%" 파일을 삭제하지 못했습니다.
     ) else (
-        echo [OK] Removed "%REL%"
+        echo [OK] "%REL%" 파일을 삭제했습니다.
     )
 )
 exit /b 0
