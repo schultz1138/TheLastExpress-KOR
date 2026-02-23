@@ -124,6 +124,7 @@ Get-ChildItem -Path $CustomBuildDir -Filter *.dll -File | ForEach-Object {
 Step "Copy patcher files"
 $patchFiles = @(
     "patch_and_install.bat",
+    "uninstall.bat",
     "translation\prepare_edit_workspace.bat",
     "translation\TRANSLATION_README.md",
     "scripts\apply_korean_patch.ps1",

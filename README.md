@@ -16,6 +16,7 @@ This repository is split into two areas:
 3. Copy the contents of `patch/` into that game folder.
 4. Run `patch_and_install.bat`.
 5. Launch the game with `start.bat`.
+6. To remove patch files later, run `uninstall.bat`.
 
 ## Required Archive Hashes (SHA256)
 

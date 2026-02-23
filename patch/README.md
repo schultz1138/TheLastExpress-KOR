@@ -5,6 +5,7 @@ This folder is the user-facing release workspace.
 ## Contents
 
 - `patch_and_install.bat`: main installer for `KOREAN.HPF`
+- `uninstall.bat`: remove installed patch files using install manifest
 - `runtime/`: launcher/runtime files (`scummvm_k.exe`, `scummvm_k.ini`, `*.dll`, `python/`, icon)
 - `translation/`: subtitle table and BG patchset
 - `scripts/`: PowerShell patch scripts
@@ -23,6 +24,7 @@ This folder is the user-facing release workspace.
 3. Copy this folder's contents into the game folder.
 4. Run `patch_and_install.bat`.
 5. Start with `runtime/start.bat` (or copied `start.bat` in game folder).
+6. To remove the patch later, run `uninstall.bat`.
 
 ## Archive Hash Check (SHA256)
 
