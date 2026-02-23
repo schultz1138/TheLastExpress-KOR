@@ -1,0 +1,41 @@
+The Last Express Korean Patch
+Project Credits
+-----------------------------
+
+The Last Express 한국어 패치
+프로젝트 크레딧
+-----------------------------
+
+프로젝트 리더
+  Schultz1138
+
+초벌 번역
+  Google Gemini
+  OpenAI ChatGPT
+
+번역 및 검수
+  Schultz1138
+  SeohyunTVda
+
+그래픽 수정 및 구현
+  Schultz1138
+
+프로그래밍 지원
+  Schultz1138
+  Google Gemini
+  OpenAI ChatGPT
+
+플레이 테스트
+  Schultz1138
+  SeohyunTVda
+
+특별 감사
+  ScummVM 팀 (lastexpress 엔진 개발)
+  qwerty0 (영어 음성 자막 스트링 제작)
+
+가족 지원
+  Garia1102 (간식 제공)
+  Seojunyo1019 (말썽 및 애교 담당)
+
+추가 환경 지원
+  B형 독감 바이러스 (격리 환경 제공)
