@@ -1,6 +1,0 @@
-devtools/create_project/msvc.cpp
-engines/lastexpress/data/archive.cpp
-engines/lastexpress/data/archive.h
-engines/lastexpress/graphics.cpp
-engines/lastexpress/sound/subtitle.cpp
-engines/lastexpress/sound/subtitle.h

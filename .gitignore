@@ -1,44 +1,42 @@
-# Build outputs
-Custom Build/
+﻿# Build outputs
 build/
-dist/
 out/
 dist/
-*.exe
-*.dll
-*.pdb
-*.ilk
-*.obj
-*.lib
-
-# Snapshot build artifacts
-custom_scummvm-2026.1.0/vcpkg_installed/
-custom_scummvm-2026.1.0/.vs/
-custom_scummvm-2026.1.0/dists/msvc/Debug*/
-custom_scummvm-2026.1.0/dists/msvc/Release*/
-custom_scummvm-2026.1.0/devtools/create_project/msvc/Debug/
-custom_scummvm-2026.1.0/devtools/create_project/msvc/Release/
-
-# Game assets / extracted data
-The Last Express/
-lastexpress/
-clean_scummvm-2026.1.0/
-tools/*_extracted/
-tools/ALL-BG/
-tools/output/
-overlay_in/
-
-# Temporary and logs
-translation/_tmp*/
-translation/_work*/
-translation/_release_overlay_input*/
-translation/*.log
-translation/*.bak
-*.tmp
-*.cache
 _tmp_commit_package/
 
-# Archives and binaries
+# Engine clean source (local only)
+engine/clean/*
+!engine/clean/.gitignore
+
+# Snapshot build artifacts
+engine/snapshots/custom-2026.1.0/vcpkg_installed/
+engine/snapshots/custom-2026.1.0/.vs/
+engine/snapshots/custom-2026.1.0/dists/msvc/Debug*/
+engine/snapshots/custom-2026.1.0/dists/msvc/Release*/
+engine/snapshots/custom-2026.1.0/devtools/create_project/msvc/Debug/
+engine/snapshots/custom-2026.1.0/devtools/create_project/msvc/Release/
+
+# Local game folder / extracted data
+The Last Express/
+lastexpress/
+patch/tools/*_extracted/
+patch/tools/ALL-BG/
+patch/tools/output/
+patch/overlay_in/
+
+# Translation temp and logs
+patch/translation/_tmp*/
+patch/translation/_work*/
+patch/translation/_release_overlay_input*/
+patch/translation/*.log
+patch/translation/*.bak
+patch/translation/kosubs.tsv
+
+# Temporary files
+*.tmp
+*.cache
+
+# Archives and disk images
 *.7z
 *.zip
 *.rar
