@@ -1,38 +1,199 @@
-﻿# The Last Express KOR
+# 게임 「라스트 익스프레스 (1997)」 한국어 패치 (ScummVM 기반)
 
-This repository is split into two areas:
+버전: 1.0.0 (2026-02-24)  
+기반: ScummVM 2026.1.0 (커스텀 빌드, 라스트 익스프레스 전용)  
 
-- `patch/`: user-facing release files (installer, runtime, translation data, patch scripts/tools)
-- `engine/`: long-term engine maintenance (custom snapshot, source patch, dev scripts)
+Changelog:
+- 컷신/인게임 자막 한국어화  
+- 게임 내에서 읽을 수 있는 문서들 한국어화  
+- 폰트 교체 및 크기 조절 옵션 추가  
 
-## Quick Start (User)
+## 이게 뭔가요? 먹는 건가요?
 
-1. Prepare a game folder with:
-   - `HD.HPF` in game root
-   - `CD1.HPF`, `CD2.HPF`, `CD3.HPF` in game root or `data`/`Data` folder
-2. Add the fan English subtitle archive:
-   - rename fan subtitle `HD.HPF` to `HD_ALLSUBS.HPF`
-   - place `HD_ALLSUBS.HPF` in game root (or `data`/`Data`)
-3. Copy the contents of `patch/` into that game folder.
-4. Run `patch_and_install.bat` (archive SHA256 is verified before build).
-5. Launch the game with `start.bat`.
-6. To remove patch files later, run `uninstall.bat`.
+이 패치는 게임 『라스트 익스프레스』(1997)의 한국어 번역 패치입니다.  
+  
+『라스트 익스프레스』는 1차 세계대전 직전,  
+실제 오리엔트 특급 열차를 배경으로 한 실시간 미스터리 어드벤처 게임입니다.  
+  
+열차 안의 모든 인물은 각자의 일정에 따라 움직이며,  
+플레이어는 그 흐름 속에서 사건을 추적하고 선택을 내려야 합니다.  
+  
+1997년에 이미 실시간 진행과 다국어 연출을 구현했던 실험적인 작품으로,  
+평론가들의 높은 평가를 받았지만 대중적으로는 널리 알려지지 못한 게임이기도 합니다.
 
-## Required Archive Hashes (SHA256)
+## 그럼 어떻게 설치하나요?
 
-Reference snapshot date: `2026-02-23` (local GOG install in maintainer workspace).
+### 1. 게임을 준비합니다
+- 본 패치는 『라스트 익스프레스』 1997년 출시 버전이 필요합니다.    
+- 현재 디지털 버전은 **GOG**에서 구매할 수 있습니다. [구매 링크](https://www.gog.com/en/game/last_express_the) 
+- 리테일 CD 버전(삼성전자판 / 브로더번드판 / 인터플레이판)도 지원합니다.
+- ⚠️ **Steam에서 판매 중인 2011년 출시한 Gold Edition은 지원하지 않습니다.**  
+  **Gold Edition은 iOS 이식판을 재이식한 것으로, 파일 구조가 다르기 때문입니다.**
 
-| File | SHA256 |
-|---|---|
-| `HD.HPF` | `0526D68F4D91212CD180CACCF8EB7F08AE1B8489FE0AC75AE60BDBC4A7D74C8C` |
-| `CD1.HPF` | `A594136C5DC020EB9A444E3AA60E6A341998A93E590CC8AD7C6B976E0907F83A` |
-| `CD2.HPF` | `F26293A597DBBDC6D782A1FAA38D9B33A786055A9C96F1D1A26CBFD6ED0EC6D7` |
-| `CD3.HPF` | `909542B8CDF3FFC58016FEF757858F9A4DF48D0E6A3DEBC3C873BDAB551E10BA` |
-| `HD_ALLSUBS.HPF` | `F7FCC14E87731BAB2EC5A02E5634DD3189A46D0D002636560FFB51E9F5493F42` |
+| 버전                        | 지원 여부 |
+| ------------------------- | ----- |
+| GOG 오리지널 버전 (DOSbox 버전 및 ScummVM 런처)          | ✅ 지원  |
+| 리테일 CD (정식발매 및 영문판)                    | ✅ 지원  |
+| Steam 및 GOG의 Gold Edition (2011) | ❌ 미지원 |
+| 다국어판 (프랑스, 독일, 이탈리아, 스페인)                      | ❌ 미지원 |
 
-## Quick Start (Developer)
 
-- Engine maintenance guide: `engine/DEV_README.md`
-- Snapshot sync workflow: `engine/SNAPSHOT_WORKFLOW.md`
-- Publish checklist: `engine/PUBLISH_CHECKLIST.md`
-- Source patch: `engine/patches/scummvm-2026.1.0/`
+### 2. 게임 파일을 확인합니다
+게임 폴더에 아래 파일이 있어야 합니다:
+
+- `HD.HPF`
+- `CD1.HPF`
+- `CD2.HPF`
+- `CD3.HPF`
+
+리테일 CD 및 GOG에서 구매하신 버전의 경우, CD1~CD3.HPF 파일은 data 또는 Data에 있습니다.  
+해당 경로에 있어도 패치 설치는 무사히 진행됩니다.  
+파일이 없다면 설치가 올바르게 되었는지 확인하세요.  
+
+### 3. (선택) 영어 자막 파일 준비
+이 게임의 시스템은 원래 영어 음성에는 자막을 지원하지 않습니다.
+영어 대사에도 자막을 함께 표시하고 싶다면  
+GOG 포럼 사용자 **qwerty0**가 제작한 팬 자막을 준비합니다.
+
+- 본 프로젝트는 해당 파일을 직접 배포하지 않습니다.   
+- 파일 관련 글은 [GOG 포럼](https://www.gog.com/forum/the_last_express/any_way_to_get_subtitles/page1) 에서 확인하실 수 있습니다.
+- 다운로드 후 `HD.HPF` → `HD_ALLSUBS.HPF`로 이름을 변경합니다.
+- 변경한 파일을 게임 폴더에 넣습니다.
+
+※ 영어에 대한 자막이 필요 없다면 이 단계는 생략 가능합니다.
+
+### 4. 한국어 패치 설치
+1. 배포된 `TheLastExpress_Kor_v1.0.0.zip` 파일을 압축 해제합니다.
+2. 모든 파일을 게임 폴더에 복사합니다.
+3. `patch_and_install.bat`를 실행합니다.
+    - 실행 전 SHA256 해시를 자동 검사합니다.
+
+### 5. 실행 및 제거
+- `start.bat` 또는 바탕화면의 **THE LAST EXPRESS (KOR)** 아이콘으로 실행합니다.    
+- 제거하려면 `uninstall.bat`를 실행하세요.
+
+## 이거 저작권 위반 아닌가요?
+
+본 프로젝트는 저작권 준수를 위해 다음 원칙을 따릅니다.
+- 완성된 KOREAN.HPF는 기본 릴리즈에 포함하지 않습니다. 
+- 원본 게임 자산(HD.HPF, CD1~3.HPF)은 절대 배포하지 않습니다. 
+- 패처가 사용자 로컬 게임 파일에서 최종 산출물을 생성합니다. 
+- 릴리즈에는 영어 원문 자막 테이블(kosubs.tsv) 및 그래픽 리소스(.bg)을 포함하지 않고,  
+  한글 라인 테이블(translation/subko.tsv)과 그래픽 리소스를 위한 패치(.bgp)만 포함합니다.
+- 사용자는 직접 게임 스크립트와 리소스를 추출(translation/prepare_edit_workspace.bat)하여,  
+  자막과 그래픽 리소스의 한국어 번역을 수정하고 이를 게임에 반영할 수 있습니다.
+
+## 얼마나 번역됐나요?
+
+- 선택지 및 이벤트 대사: 100%
+- 게임 내 신문 및 책 등 그래픽: 100%
+- 테스트 플레이: 전체 루트 기준 2회 이상 클리어 테스트 완료
+- 미번역 부분: 
+	- 시스템 메뉴
+	- 엔딩 크레딧 및 직전 애니메이션 자막 (4줄)
+- 오타 및 문맥 수정은 지속적으로 진행 중이며,  
+사용자가 직접 수정 및 재패치할 수 있도록 구조를 설계하였습니다.
+
+## 무슨 기준으로 번역한건가요?
+
+- 시대적 배경을 고려해 비교적 중립적이고 절제된 어투 사용하였습니다.
+- 실제 역사 인물 및 지명은 통용 표기를 우선하였습니다. (예: 블랙 핸드 → 흑수단)
+- 헤어, 무슈, 마담, 미스터 등 다국적이 드러나는 표현은 분위기 유지를 위해 음차하였습니다.
+- 신문 기사, 책 등은 1930년대 한국 출판물을 참고하였습니다.
+- 대사 중 의미 전달이 어려운 부분은 문맥을 우선하여 자연스럽게 번역하였습니다.
+
+## 자주 물을지도 모르는 질문
+
+### SHA256 해시가 일치하지 않습니다.  
+지원하지 않는 버전일 가능성이 높습니다.  
+**다국어판(프랑스, 독일, 스페인, 이탈리아) 및 Gold Edition은 지원하지 않습니다.**  
+
+### 패치 실행 후 게임이 시작되지 않습니다.  
+- 관리자 권한으로 실행해 보세요.  
+- 백신 프로그램이 실행 파일을 차단하지 않았는지 확인하세요.  
+
+### 세이브 파일은 호환되나요?  
+현재 GOG에서 판매 중인 ScummVM 런처를 사용한 버전과 완벽 호환됩니다.  
+**단, Steam에 판매 중인 Gold Edition과는 호환되지 않습니다.**
+
+### Windows만 지원하나요?  
+현재는 Windows 7 이상만 지원합니다. Linux, Android, macOS, iOS 지원은 계획이 없습니다.
+
+### 폰트 크기가 너무 커요.  
+`scummvm_k.ini` 파일을 메모장 등으로 열어, `lastexpress_kor_font_size=22` 부분을 수정하실 수 있습니다.  
+사이즈는 최소 14 부터 32까지 수정 가능하지만, 두 줄 이상의 출력시 일부 글자가 누락될 수 있기에 22 이하를 권장합니다.
+
+### 폰트가 마음에 안들어요.
+원하시는 .TTF 확장자의 폰트를 `korean.ttf`로 이름을 변경하시어, 게임이 설치된 폴더에 넣으면 해당 폰트로 자막이 출력됩니다.
+
+### 번역이 마음에 안들어요.
+`translation/subko.tsv` 의 한국어 자막 내용을 변경하시어, 게임이 설치된 폴더에 넣으면 해당 내용으로 자막이 출력됩니다.
+
+### 게임 내 책과 문서들의 디자인이 마음에 안들어요.
+`translation/prepare_edit_workspace.bat`를 실행하시면, 게임 내의 그래픽 리소스인 `.BG` 파일을 `output_user` 폴더에 추출합니다.  
+추출된 파일은 `.BMP`의 그림 파일로 변환되어, 그래픽 편집 프로그램을 통해 수정하실 수 있습니다.  
+수정이 끝나신 경우, 게임 폴더의 `patch_and_install.bat`을 재실행하시면 변경된 `KOREAN.HPF`를 생성합니다.  
+기존 `KOREAN.HPF`는 `KOREAN.HPF.bak.날짜_시간`의 형태로 백업되니, 언제든 복원하실 수 있습니다.
+
+### 이걸로 다른 나라 언어 패치도 만들 수 있나요?
+게임에서 UTF-8 지원, TTF 폰트 로딩, 자동 줄바꿈 등을 지원하도록 scummVM의 lastexpress 엔진을 패치하였습니다.  
+따라서, 이론적으로 가능합니다. 단, 현재는 엔진 내에 `KOREAN.HPF`를 로드하도록 하드 코딩되어 있어,  
+다국어 버전을 만드셔도 파일명은 한국어판과 동일하게 사용하셔야 합니다. 원하시면, 직접 수정하실 수 있습니다.
+
+### 왜 엔딩 직전 애니메이션 자막 4줄은 번역되지 않았나요?
+해당 자막은 일반 대사 스크립트인 SBE와 달리 NIS(Non-Interactive Sequence) 애니메이션 내부에 포함되어 있으며,  
+텍스트 테이블 기반이 아닌 영상 리소스에 직접 포함된 형태입니다.  
+본 프로젝트는 애니메이션 리소스를 직접 편집하는 방식을 채택하지 않았으며,  
+따라서 해당 4줄은 원본 보존 원칙에 따라 번역되지 않았습니다.  
+미번역된 4줄은 본 패치와 같이 공개되는 아래 영상물의 첫 10초에서 확인하실 수 있습니다.
+
+[![The Last Express: 29년만에 도착한 기차](https://img.youtube.com/vi/LSPzqMyUZNg/hqdefault.jpg)](https://youtu.be/LSPzqMyUZNg)
+
+## 알려진 문제  
+  
+- 폰트 크기 24 이상에서 줄바꿈으로 인한 일부 글자 누락
+- 역 도착 안내 자막과 등장인물 대사 자막이 같이 나올 때, 콘솔창에 경고 메시지 출력
+  (게임 플레이에는 지장 없음을 확인)
+
+## 엔진 수정 사항  
+
+본 프로젝트는 ScummVM의 lastexpress 엔진을 기반으로 하며,  
+UTF-8 및 TTF 폰트 로딩 지원 등을 위해 일부 수정하였습니다.  
+- 수정 내용은 `engine/patches/` 디렉토리의 diff 파일로 제공됩니다.  
+- 수정에 사용된 ScummVM 스냅샷은 `engine/snapshot/`에 포함되어 있습니다.  
+- 빌드 방법은 `engine/DEV_README.md`를 참고하세요.    
+ScummVM은 GNU General Public License (GPL) 하에 배포됩니다.  
+관련된 라이선스들의 전문은 `licenses` 폴더에서 확인할 수 있습니다.
+
+## 폰트 라이선스  
+  
+본 프로젝트에는 네이버의 나눔글꼴이 사용되었습니다.
+- 나눔스퀘어
+- 나눔명조
+- 나눔고딕
+- 나눔손글씨 여름글씨
+- 나눔손글씨 우리딸 손글씨
+- 나눔손글씨 규리의 일기
+- 나눔손글씨 할아버지의 나눔
+- 나눔손글씨 안쌍체  
+
+포함된 폰트는 SIL Open Font License (OFL 1.1)를 따릅니다.  
+폰트 저작권 및 라이선스 전문은 `licenses/COPYING.NANUM.OFL.txt`에서 확인할 수 있습니다.
+
+## 감사의 말
+
+- Jordan Mechner 및 원작 개발팀  (이 게임이 존재하지 않았다면 이 프로젝트도 없었음)
+- ScummVM 개발팀  (엔진 오픈소스 기반 제공)
+- GOG 포럼의 qwerty0  (영어 대사에 대한 자막 자료 제공)
+- SeohyunTVda (테스트 플레이와 번역 검수를 진행해준 소중한 나의 딸)
+- Garia1102 (간식을 제공한 사랑하는 나의 아내)
+- Seojunyo1019 (정서적 지원을 해준 나의 귀여운 아들)
+- B형 독감 바이러스 (설 연휴 중 격리 일주일을 만들어 작업 속도를 가속함)
+
+또한, 이 프로젝트를 플레이해 주는 모든 분들께 감사드립니다.
+
+---
+
+이 프로젝트는 비상업적 팬 번역 프로젝트입니다.  
+Jordan Mechner 및 ScummVM 팀은 어떠한 책임도 지지 않습니다.  
+문제 발생 시 세이브 파일과 같이 이슈로 등록해 주세요.  
