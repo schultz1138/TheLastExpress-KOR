@@ -37,7 +37,6 @@ Changelog:
 | Steam 및 GOG의 Gold Edition (2011) | ❌ 미지원 |
 | 다국어판 (프랑스, 독일, 이탈리아, 스페인)                      | ❌ 미지원 |
 
-
 ### 2. 게임 파일을 확인합니다
 게임 폴더에 아래 파일이 있어야 합니다:
 
@@ -154,6 +153,25 @@ GOG 포럼 사용자 **qwerty0**가 제작한 팬 자막을 준비합니다.
 - 폰트 크기 24 이상에서 줄바꿈으로 인한 일부 글자 누락
 - 역 도착 안내 자막과 등장인물 대사 자막이 같이 나올 때, 콘솔창에 경고 메시지 출력
   (게임 플레이에는 지장 없음을 확인)
+
+## 필수 아카이브 해시 (SHA256)
+
+기준 스냅샷 날짜: `2026-02-23` (본 프로젝트 진행자 로컬 GOG 설치본 기준).
+
+| File | SHA256 |
+|---|---|
+| `HD.HPF` | `0526D68F4D91212CD180CACCF8EB7F08AE1B8489FE0AC75AE60BDBC4A7D74C8C` |
+| `CD1.HPF` | `A594136C5DC020EB9A444E3AA60E6A341998A93E590CC8AD7C6B976E0907F83A` |
+| `CD2.HPF` | `F26293A597DBBDC6D782A1FAA38D9B33A786055A9C96F1D1A26CBFD6ED0EC6D7` |
+| `CD3.HPF` | `909542B8CDF3FFC58016FEF757858F9A4DF48D0E6A3DEBC3C873BDAB551E10BA` |
+| `HD_ALLSUBS.HPF` | `F7FCC14E87731BAB2EC5A02E5634DD3189A46D0D002636560FFB51E9F5493F42` |
+
+## 빠른 시작 (개발자)
+
+- 엔진 유지보수 가이드: `engine/DEV_README.md`
+- 스냅샷 동기화 워크플로: `engine/SNAPSHOT_WORKFLOW.md`
+- 배포 체크리스트: `engine/PUBLISH_CHECKLIST.md`
+- 소스 패치: `engine/patches/scummvm-2026.1.0/`
 
 ## 엔진 수정 사항  
 
