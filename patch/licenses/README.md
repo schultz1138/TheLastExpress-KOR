@@ -1,11 +1,14 @@
-﻿# Licenses
+﻿# 라이선스
 
-This folder contains license notices for distributed runtime components.
+이 폴더에는 배포되는 런타임 구성요소의 라이선스 고지 문서가 포함됩니다.
 
-Recommended files to include for release builds:
+릴리즈 빌드에 포함을 권장하는 문서:
 
-- ScummVM GPL v3 notice
-- Embedded Python license
-- Font licenses (if bundled)
+- ScummVM GPL v3 고지
+- Embedded Python 라이선스
+- 폰트 라이선스(번들 시)
 
-For full upstream license texts, see `engine/snapshots/custom-2026.1.0/COPYING` and `engine/snapshots/custom-2026.1.0/LICENSES/`.
+업스트림 전체 라이선스 원문은 다음을 참고하세요.
+
+- `engine/snapshots/custom-2026.1.0/COPYING`
+- `engine/snapshots/custom-2026.1.0/LICENSES/`
