@@ -96,13 +96,13 @@ GOG 포럼 사용자 **qwerty0**가 제작한 팬 자막을 준비합니다.
 ## 저작권 관련 안내
 
 본 프로젝트는 저작권 준수를 위해 다음 원칙을 따릅니다.
-- 완성된 KOREAN.HPF는 기본 릴리즈에 포함하지 않습니다. 
-- 원본 게임 자산(HD.HPF, CD1~3.HPF)은 절대 배포하지 않습니다. 
+- 완성된 `KOREAN.HPF`는 기본 릴리즈에 포함하지 않습니다. 
+- 원본 게임 자산(`HD.HPF`, `CD1~3.HPF`)은 절대 배포하지 않습니다. 
 - 패처가 사용자 로컬 게임 파일에서 최종 산출물을 생성합니다. 
-- 릴리즈에는 영어 원문 자막 테이블(kosubs.tsv) 및 그래픽 리소스(.bg)을 포함하지 않고,  
-  한글 라인 테이블(translation/subko.tsv)과 그래픽 리소스를 위한 패치(.bgp)만 포함합니다.
-- 사용자는 직접 게임 스크립트와 리소스를 추출(translation/prepare_edit_workspace.bat)하여,  
-  자막과 그래픽 리소스의 한국어 번역을 수정하고 이를 게임에 반영할 수 있습니다.
+- 릴리즈에는 영어 원문 자막 테이블(`kosubs.tsv`) 및 그래픽 리소스(`.bg`)을 포함하지 않고,  
+  한글 라인 테이블(`translation/subko.tsv`)과 그래픽 리소스를 위한 패치(`.bgp`)만 포함합니다.
+- 사용자는 직접 게임 스크립트와 리소스를 추출(`translation/prepare_edit_workspace.bat`)하여,  
+  자막(`kosubs.user.tsv`)과 그래픽 리소스의 한국어 번역을 수정하고 이를 게임에 반영할 수 있습니다.
 
 <a id="progress"></a>
 ## 번역 진행 현황
@@ -169,9 +169,9 @@ GOG 포럼 사용자 **qwerty0**가 제작한 팬 자막을 준비합니다.
 텍스트 테이블 기반이 아닌 영상 리소스에 직접 포함된 형태입니다.  
 본 프로젝트는 애니메이션 리소스를 직접 편집하는 방식을 채택하지 않았으며,  
 따라서 해당 4줄은 원본 보존 원칙에 따라 번역되지 않았습니다.  
-미번역된 4줄은 본 패치와 같이 공개되는 아래 영상물의 첫 10초에서 확인하실 수 있습니다.
+미번역된 4줄은 본 패치와 같이 공개되는 아래 영상물의 첫 5초에서 확인하실 수 있습니다.
 
-[![The Last Express: 29년만에 도착한 기차](https://img.youtube.com/vi/LSPzqMyUZNg/hqdefault.jpg)](https://youtu.be/LSPzqMyUZNg)
+[![The Last Express: 29년만에 도착한 기차](https://img.youtube.com/vi/BeENY5S5Hgs/hqdefault.jpg)](https://youtu.be/BeENY5S5Hgs)
 
 <a id="known-issues"></a>
 ## 알려진 문제  
