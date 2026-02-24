@@ -123,6 +123,34 @@ function Invoke-Native {
 	}
 }
 
+function Ensure-ScummvmTestConfig {
+	param([string]$Path)
+
+	if (Test-Path $Path) {
+		return
+	}
+
+	$configDir = Split-Path -Parent $Path
+	if (-not [string]::IsNullOrWhiteSpace($configDir) -and -not (Test-Path $configDir)) {
+		New-Item -Path $configDir -ItemType Directory -Force | Out-Null
+	}
+
+	$configLines = @(
+		"[scummvm]",
+		"subtitles=true",
+		"music_volume=192",
+		"sfx_volume=192",
+		"speech_volume=192",
+		"",
+		"[lastexpress]",
+		"lastexpress_kor_font_size=18",
+		""
+	)
+
+	Set-Content -Path $Path -Value $configLines -Encoding UTF8
+	Write-Host "  generated smoke-test ini: $Path"
+}
+
 if ([string]::IsNullOrWhiteSpace($ScummvmRoot)) {
 	$ScummvmRoot = Join-Path $WorkspaceRoot "snapshots\custom-2026.1.0"
 }
@@ -141,6 +169,8 @@ if ([string]::IsNullOrWhiteSpace($VcpkgInstalledDir)) {
 if ([string]::IsNullOrWhiteSpace($CustomBuildDir)) {
 	$CustomBuildDir = Join-Path $RepoRoot "patch\runtime"
 }
+
+Ensure-ScummvmTestConfig -Path $ConfigPath
 
 $msbuild = Resolve-MSBuildPath
 if (-not $msbuild) {

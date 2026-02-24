@@ -1,5 +1,6 @@
 @echo off
 setlocal
+call :init_utf8
 
 set "SCRIPT_DIR=%~dp0"
 cd /d "%SCRIPT_DIR%"
@@ -73,6 +74,17 @@ echo        자막 템플릿 : translation\kosubs.user.tsv
 echo        BG 템플릿   : translation\output_user\*.bmp
 echo        BGP 생성    : py tools\build_bg_patchset.py --game-dir "%GAME_DIR%" --bmp-dir ".\translation\output_user" --out-dir ".\translation\bgpatch"
 pause
+call :restore_cp
+exit /b 0
+
+:init_utf8
+for /f "tokens=2 delims=:" %%A in ('chcp') do set "_KOR_PREV_CP=%%A"
+set "_KOR_PREV_CP=%_KOR_PREV_CP: =%"
+if not "%_KOR_PREV_CP%"=="65001" chcp 65001 >nul
+exit /b 0
+
+:restore_cp
+if defined _KOR_PREV_CP if not "%_KOR_PREV_CP%"=="65001" chcp %_KOR_PREV_CP% >nul
 exit /b 0
 
 :has_archive
@@ -91,4 +103,5 @@ echo [HINT] 계속 실패하면 아래를 확인하세요:
 echo        1) ZIP을 Program Files가 아닌 쓰기 가능한 폴더에 압축 해제
 echo        2) Python ^(py/python^) 설치 후 재시도
 pause
+call :restore_cp
 exit /b 1

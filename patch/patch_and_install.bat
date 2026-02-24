@@ -1,5 +1,6 @@
 @echo off
 setlocal
+call :init_utf8
 
 cd /d "%~dp0"
 
@@ -132,11 +133,22 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
  "}"
 
 echo.
-echo [DONE] 패치가 완료되었습니다.
+echo [DONE] 패치가 완료되었습니다. 바탕화면의 바로가기로 게임을 실행합니다.
 echo        결과 파일: "%GAME_DIR%\KOREAN.HPF"
 echo        실행 파일: "%GAME_DIR%\start.bat"
 echo        제거 파일: "%GAME_DIR%\uninstall.bat"
 pause
+call :restore_cp
+exit /b 0
+
+:init_utf8
+for /f "tokens=2 delims=:" %%A in ('chcp') do set "_KOR_PREV_CP=%%A"
+set "_KOR_PREV_CP=%_KOR_PREV_CP: =%"
+if not "%_KOR_PREV_CP%"=="65001" chcp 65001 >nul
+exit /b 0
+
+:restore_cp
+if defined _KOR_PREV_CP if not "%_KOR_PREV_CP%"=="65001" chcp %_KOR_PREV_CP% >nul
 exit /b 0
 
 :check_required
@@ -261,4 +273,5 @@ echo        1) ZIP을 Program Files가 아닌 쓰기 가능한 폴더에 압축 
 echo        2) ZIP/파일 우클릭 후 "차단 해제" 선택
 echo        3) 최신 릴리즈 ZIP을 다시 압축 해제 후 재실행
 pause
+call :restore_cp
 exit /b 1

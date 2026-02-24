@@ -1,5 +1,6 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
+call :init_utf8
 
 cd /d "%~dp0"
 set "GAME_DIR=%cd%"
@@ -42,6 +43,17 @@ if exist "%GAME_DIR%\python" (
 echo.
 echo [DONE] 제거가 완료되었습니다.
 pause
+call :restore_cp
+exit /b 0
+
+:init_utf8
+for /f "tokens=2 delims=:" %%A in ('chcp') do set "_KOR_PREV_CP=%%A"
+set "_KOR_PREV_CP=%_KOR_PREV_CP: =%"
+if not "%_KOR_PREV_CP%"=="65001" chcp 65001 >nul
+exit /b 0
+
+:restore_cp
+if defined _KOR_PREV_CP if not "%_KOR_PREV_CP%"=="65001" chcp %_KOR_PREV_CP% >nul
 exit /b 0
 
 :process_line
