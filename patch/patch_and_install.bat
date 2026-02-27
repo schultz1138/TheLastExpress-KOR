@@ -7,11 +7,15 @@ cd /d "%~dp0"
 set "PATCH_ROOT=%cd%"
 set "GAME_DIR=%PATCH_ROOT%"
 set "SCRIPT_PATH=%PATCH_ROOT%\scripts\apply_korean_patch.ps1"
+set "CONVERT_TSV_SCRIPT=%PATCH_ROOT%\scripts\convert_tsv_to_utf8.ps1"
 set "MANIFEST_PATH=%GAME_DIR%\KOR_PATCH_INSTALL_MANIFEST.txt"
 
 if not exist "!SCRIPT_PATH!" (
     echo [ERROR] 필수 파일이 없습니다: scripts\apply_korean_patch.ps1
     goto :fail
+)
+if not exist "!CONVERT_TSV_SCRIPT!" (
+    echo [WARN] TSV 인코딩 정규화 스크립트가 없습니다: scripts\convert_tsv_to_utf8.ps1
 )
 
 call :check_required "%GAME_DIR%"
@@ -58,6 +62,25 @@ if /I "%KOR_SKIP_HASH_CHECK%"=="1" (
     call :verify_hashes "!GAME_DIR!" "!ALLSUBS_HPF!"
     if errorlevel 1 (
         goto :fail
+    )
+)
+
+if /I "%KOR_SKIP_TSV_NORMALIZE%"=="1" (
+    echo [WARN] TSV UTF-8 정규화를 건너뜁니다 ^(KOR_SKIP_TSV_NORMALIZE=1^)
+) else (
+    if exist "!CONVERT_TSV_SCRIPT!" (
+        echo [STEP] TSV 인코딩 정규화 ^(UTF-8^)
+        powershell -NoProfile -ExecutionPolicy Bypass -File "!CONVERT_TSV_SCRIPT!" ^
+            "!PATCH_ROOT!\translation\subko.tsv" ^
+            "!PATCH_ROOT!\translation\kosubs.user.tsv" ^
+            "!PATCH_ROOT!\translation\kosubs.tsv" ^
+            -NoBackup
+        if errorlevel 1 (
+            echo [ERROR] TSV 인코딩 정규화에 실패했습니다.
+            goto :fail
+        )
+    ) else (
+        echo [WARN] TSV 인코딩 정규화를 건너뜁니다 ^(스크립트 없음^)
     )
 )
 

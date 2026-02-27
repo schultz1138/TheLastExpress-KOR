@@ -8,7 +8,14 @@
 - `uninstall.bat`: 설치 매니페스트 기준으로 패치 파일 제거
 - `runtime/`: 런처/런타임 파일(`scummvm_k.exe`, `scummvm_k.ini`, `*.dll`, `python/`, 아이콘)
 - `translation/`: 자막 테이블 및 BG 패치셋
+  - `translation\convert_tsv_utf8.bat`: 엑셀 저장 후 TSV 인코딩 UTF-8 복구
 - `scripts/`: PowerShell 패치 스크립트
+  - `check_translation_consistency.ps1`: 동일 원문의 번역 불일치 검사
+  - `add_review_subtitle_ids.ps1` / `remove_review_subtitle_ids.ps1`: 검수용 자막 ID 붙이기/제거
+  - `lint_subtitles.ps1`: 자막 품질 린트(길이/이스케이프/탭/공백)
+  - `normalize_subtitles.ps1`: 자막 텍스트 자동 정리(공백/\n 주변 정리)
+  - `suggest_linebreaks.ps1`: 자동 줄바꿈 제안 TSV 생성
+  - `preview_subtitle_width.ps1`: 폰트 기준 줄 폭 미리보기 리포트
 - `tools/`: Python 보조 도구
 - `licenses/`: 배포 구성요소 라이선스 문서
 
@@ -57,6 +64,7 @@ GOG 포럼 사용자 **qwerty0**가 제작한 팬 자막을 준비합니다.
 2. 모든 파일을 게임 폴더에 복사합니다.
 3. `patch_and_install.bat`를 실행합니다.
     - 실행 전 SHA256 해시를 자동 검사합니다.
+    - 빌드 전 `translation\*.tsv` 인코딩을 UTF-8(BOM 없음)으로 자동 정규화합니다.
 
 ### 5. 실행 및 제거
 - `start.bat` 또는 바탕화면의 **THE LAST EXPRESS (KOR)** 아이콘으로 실행합니다.    
@@ -86,5 +94,7 @@ Get-FileHash -Algorithm SHA256 ".\HD_ALLSUBS.HPF"
 
 `patch_and_install.bat`는 빌드 전에 위 SHA256 검사를 자동 수행합니다.
 검사를 건너뛰려면 `KOR_SKIP_HASH_CHECK=1`로 실행하세요.
+
+TSV 인코딩 자동 정규화를 건너뛰려면 `KOR_SKIP_TSV_NORMALIZE=1`로 실행하세요.
 
 `HD_ALLSUBS.HPF`가 존재하고 해시가 일치하면 음성 자막 시드 데이터가 자동으로 포함됩니다.
