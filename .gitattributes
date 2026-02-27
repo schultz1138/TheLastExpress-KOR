@@ -1,0 +1,3 @@
+# Keep batch files with Windows CRLF in the repository/archive.
+# This prevents cmd parser issues caused by LF-only scripts.
+*.bat -text
