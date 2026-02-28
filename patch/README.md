@@ -98,3 +98,12 @@ Get-FileHash -Algorithm SHA256 ".\HD_ALLSUBS.HPF"
 TSV 인코딩 자동 정규화를 건너뛰려면 `KOR_SKIP_TSV_NORMALIZE=1`로 실행하세요.
 
 `HD_ALLSUBS.HPF`가 존재하고 해시가 일치하면 음성 자막 시드 데이터가 자동으로 포함됩니다.
+
+## 문제 해결: BAT 창 즉시 종료
+
+`patch_and_install.bat` 실행 시 검은 창이 바로 닫히거나  
+`...was unexpected at this time` 오류가 나오면, 대부분 BAT 파일이 LF-only로 변형된 경우입니다.
+
+- 이 패치는 BAT 줄바꿈을 CRLF로 전제합니다.
+- 저장소는 `.gitattributes`의 `*.bat -text`로 BAT를 CRLF로 고정합니다. 
+- BAT를 편집할 때도 CRLF를 유지하세요.

@@ -136,6 +136,14 @@ GOG 포럼 사용자 **qwerty0**가 제작한 팬 자막을 준비합니다.
 - 관리자 권한으로 실행해 보세요.  
 - 백신 프로그램이 실행 파일을 차단하지 않았는지 확인하세요.  
 
+### `patch_and_install.bat` 실행 시 창이 바로 닫히거나 `...was unexpected at this time` 오류가 나옵니다.
+이 이슈의 핵심 원인은 배치 파일 줄바꿈(EOL)입니다.  
+`patch_and_install.bat`가 LF-only 상태로 배포/저장되면, `cmd`가 `^` 멀티라인 구문을 잘못 해석해 즉시 종료될 수 있습니다.
+
+- 이 패치는 BAT 줄바꿈을 CRLF로 전제합니다.
+- 이 저장소는 `.gitattributes`에서 `*.bat -text`로 고정하여 BAT를 CRLF로 유지합니다.
+- BAT를 직접 편집할 경우에도 CRLF를 유지해야 합니다.
+
 ### 세이브 파일은 호환되나요?  
 현재 GOG에서 판매 중인 ScummVM 런처를 사용한 버전과 완벽 호환됩니다.  
 **단, Steam에 판매 중인 Gold Edition과는 호환되지 않습니다.**
