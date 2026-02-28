@@ -1,3 +1,3 @@
-# Keep batch files with Windows CRLF in the repository/archive.
+# Keep batch files with literal CRLF bytes in git blobs and archives.
 # This prevents cmd parser issues caused by LF-only scripts.
-*.bat text eol=crlf
+*.bat -text
