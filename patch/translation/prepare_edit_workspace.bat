@@ -72,7 +72,7 @@ echo.
 echo [DONE] 편집 작업 폴더 준비가 완료되었습니다.
 echo        자막 템플릿 : translation\kosubs.user.tsv
 echo        BG 템플릿   : translation\output_user\*.bmp
-echo        BGP 생성    : py tools\build_bg_patchset.py --game-dir "%GAME_DIR%" --bmp-dir ".\translation\output_user" --out-dir ".\translation\bgpatch"
+echo        BGP 생성    : translation\build_bgpatch.bat
 pause
 call :restore_cp
 exit /b 0

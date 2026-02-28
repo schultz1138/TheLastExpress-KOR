@@ -161,6 +161,20 @@ translation\prepare_edit_workspace.bat
 
 ## BG 패치셋 재생성
 
+권장(배치 파일):
+
+```bat
+translation\build_bgpatch.bat
+```
+
+다른 게임 경로를 직접 지정하려면:
+
+```bat
+translation\build_bgpatch.bat "D:\Games\The Last Express"
+```
+
+직접 Python으로 실행하려면:
+
 ```powershell
 py .\tools\build_bg_patchset.py --game-dir "D:\Games\The Last Express" --bmp-dir ".\translation\output_user" --out-dir ".\translation\bgpatch"
 ```

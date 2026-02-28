@@ -787,10 +787,10 @@
       "name": "FBPOEM01.BG",
       "ops": 1,
       "patch_file": "FBPOEM01.BG.BGP",
-      "patch_size": 144425,
+      "patch_size": 144655,
       "source_archive": "CD2.HPF",
-      "target_sha256": "13b7035fec59c5a65cd302f8787b8bfc3ae2e977583cf7ecd7c2554f63350b01",
-      "target_size": 279186
+      "target_sha256": "83cce1b36ac2427b9f815f902f30c109f503e05201f000aff809825f1dec7d51",
+      "target_size": 279398
     },
     {
       "base_sha256": "23007955c72fda66b4c629728c788edb2e061329923c298dd7b1975e6153be7b",
@@ -798,10 +798,10 @@
       "name": "FBPOEM02.BG",
       "ops": 1,
       "patch_file": "FBPOEM02.BG.BGP",
-      "patch_size": 151265,
+      "patch_size": 151006,
       "source_archive": "CD2.HPF",
-      "target_sha256": "13acf91eed18a3465f6c9ffa56acbfe4eefcd7d74bde2ad7c518f6996f4fe0c5",
-      "target_size": 285490
+      "target_sha256": "a0504859cd476f83c6e395c6d7fb506daa9a374941579ad4cddc0b157ecaa064",
+      "target_size": 285217
     },
     {
       "base_sha256": "056118ddc5903e3ceb984a605678e026f9bb458822948197476a5707aabaa339",

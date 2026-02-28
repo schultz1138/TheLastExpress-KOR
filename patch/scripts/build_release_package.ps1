@@ -126,6 +126,7 @@ $patchFiles = @(
     "patch_and_install.bat",
     "uninstall.bat",
     "translation\prepare_edit_workspace.bat",
+    "translation\build_bgpatch.bat",
     "translation\TRANSLATION_README.md",
     "scripts\apply_korean_patch.ps1",
     "scripts\build_korean_hpf.ps1",

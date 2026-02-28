@@ -28,13 +28,16 @@ patch/overlay_in/
 patch/translation/_tmp*/
 patch/translation/_work*/
 patch/translation/_release_overlay_input*/
+patch/translation/output_user/
 patch/translation/*.log
 patch/translation/*.bak
+patch/translation/*.bak.*
 patch/translation/kosubs.tsv
 
 # Temporary files
 *.tmp
 *.cache
+*.bak.*
 
 # Archives and disk images
 *.7z
